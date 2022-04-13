@@ -7,6 +7,7 @@ import com.example.authorizeWithJWT.security.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +29,12 @@ public class UtilController {
         User user = userRepository.findByUsername(username).get();
         user.addRole(auth);
         userRepository.save(user);
-        System.out.println("Done");
         return new ResponseEntity<>("Done", HttpStatus.OK);
 
     }
 
-    @GetMapping(value = "/test")
+    @GetMapping(value = "test")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> testApi() {
         return new ResponseEntity<>("Test", HttpStatus.OK);
     }

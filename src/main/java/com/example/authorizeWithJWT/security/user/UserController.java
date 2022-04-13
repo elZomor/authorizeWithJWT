@@ -18,7 +18,6 @@ public class UserController {
 
     @PostMapping("/signin")
     public String login(@RequestBody User user) {
-        System.out.println(user.getPassword());
         return userService.signin(user.getUsername(), user.getPassword());
     }
 }
